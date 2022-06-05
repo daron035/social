@@ -47,5 +47,12 @@ class UserAdmin(UserAdmin):
     get_img.short_description = 'image'
 
 
+
+@admin.register(Tweets)
+class TweetsAdmin(admin.ModelAdmin):
+    list_display = ('user', 'body', 'time_admin')
+
+
+
 admin.site.register(Profile)
 admin.site.unregister(Group)

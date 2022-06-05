@@ -1,15 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
+    <title>Dwitter</title>
 </head>
 <body>
-    <h1>lksdhfjasdfjhdsfhfdkshfjksdhkjfhs</h1>
-    {% block content %}
-    {% endblock content %}
+    <section class="hero is-small is-warning mb-4">
+        <div class="hero-body">
+            <h1 class="title is-1">Chitter</h1>
+            <p class="subtitle is-4">
+                Your tiny social network built with Django
+            </p>
+        </div>
+    </section>
 
+    <div class="container">
+        <div class="columns">
+        {% block content %}
+
+        {% endblock content %}
+        </div>
+    </div>
 </body>
 </html>
