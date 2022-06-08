@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,22 +9,59 @@
     <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
     <title>Dwitter</title>
 </head>
+
 <body>
-    <section class="hero is-small is-warning mb-4">
-        <div class="hero-body">
-            <h1 class="title is-1">Chitter</h1>
-            <p class="subtitle is-4">
-                Your tiny social network built with Django
-            </p>
+    <section class="hero is-small has-background-info-light">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-body my-1">
+          <nav class="navbar">
+            <div class="container">
+              <div class="navbar-brand">
+                <a class="navbar-item">
+                  <h1 class="is-size-1">Home</h1>
+                </a>
+                <span class="navbar-burger" data-target="navbarMenuHeroA">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </div>
+              <div id="navbarMenuHeroA" class="navbar-menu">
+                <div class="navbar-end">
+                  <a class="navbar-item" href="{% url 'dashboard' %}">
+                    Home
+                  </a>
+                  <a class="navbar-item">
+                    Chat
+                  </a>
+                  <p class="subtitle is-size-6 my-auto ml-3">
+                    {{ user.username }}
+                  </p>
+                  <!-- <span class="navbar-item"> -->
+                      <div class="block" >
+                      <figure class="image is-96x96">
+                    <a class="#">
+                            <img class="is-rounded" style="margin-top: 10px; margin-left: 10px;" src="{{ user.image.url }}">
+                        </a>
+                    </figure>
+                </div>
+                  <!-- </span> -->
+                </div>
+              </div>
+            </div>
+          </nav>
         </div>
     </section>
+      
 
-    <div class="container">
+
+    <div class="container mt-4">
         <div class="columns">
-        {% block content %}
+            {% block content %}
 
-        {% endblock content %}
+            {% endblock content %}
         </div>
     </div>
 </body>
+
 </html>

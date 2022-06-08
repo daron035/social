@@ -12,6 +12,9 @@ class Profile(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     follows = models.ManyToManyField(
         'self', related_name='followed_by', symmetrical=False, blank=True)
+    # friends = models.ManyToManyField(
+    #     'self', related_name='friends_by', symmetrical=False, blank=True)
+    
 
     def __str__(self):
         return self.user.username

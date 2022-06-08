@@ -1,0 +1,17 @@
+<div class="column is-one-third">
+<a href="{% url 'profile_list' %}">
+    <button class="button is-fullwidth mb-4" type="submit">All tweets</button></a>
+{% if user.is_authenticated %}
+    <a href="{% url 'profile' user.profile.pk %}">
+        <button class="button is-fullwidth mb-4" type="submit">My tweets</button></a>
+    <a href="{% url 'user_follows_list' %}">
+        <button class="button is-fullwidth mb-4" type="submit">My follows</button></a>
+        {% if form %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button is-fullwidth has-background-info-light mt-5" type="submit">Tweet</button>
+    </form>
+        {% endif %}
+</div>
+{% endif %}

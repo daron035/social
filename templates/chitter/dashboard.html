@@ -13,6 +13,16 @@
             </div>
         {% endfor %}
     {% endfor %}
+    {% for t in tweets %}
+        <div class="box">
+            {{ t.body }}
+            <span class="is-small has-text-grey-light">
+                {{ t.created_at }} by {{ t.user.username }}
+            </span>
+        </div>
+    {% endfor %}
 </div>
+
+{% include 'snipets/sidebar.html' %}
 
 {% endblock content %}

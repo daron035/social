@@ -2,28 +2,6 @@
 
 {% block content %}
 
-<!-- <div class="column">
-    <div class="block">
-        <h1 class="title">{{ profile.user.username|upper }}'s chits</h1>
-    </div>
-    <form method="post">
-        {% csrf_token %}
-        <div class="buttons has-addons">
-        {% if profile in request.user.profile.follows.all or profile == request.user.profile %}
-            <button class="button is-success is-static">Follow</button>
-            <button class="button is-danger" name="follow" value="unfollow">
-                Unfollow
-            </button>
-        {% else %}
-            <button class="button is-success" name="follow" value="follow">
-                Follow
-            </button>
-            <button class="button is-danger is-static">Unfollow</button>
-        {% endif %}
-        </div>
-    </form>
-</div> -->
-
 <div class="column">
     <div class="block">
         <h1 class="title">{{ profile.user.username|upper }}'s chits</h1>
@@ -45,7 +23,7 @@
         {% endif %}
         </div>
     </form>
-    <div class="content">
+    <div class="content mt-5">
         {% for tweet in profile.user.tweets.all %}
             <div class="box">
                 {{ tweet.body|slice:":20" }}
@@ -60,44 +38,53 @@
 
 <div class="column is-one-third">
 
-    <div class="block">
+
     <a href="{% url 'profile_list' %}">
-        <button class="button is-fullwidth">
-            All Profiles
-        </button></a></div>
+        <button class="button is-fullwidth mb-4" type="submit">All tweets</button></a>
+    <a href="{% url 'profile' user.profile.pk %}">
+        <button class="button is-fullwidth mb-4" type="submit">My tweets</button></a>
+    <a href="{% url 'user_follows_list' %}">
+        <button class="button is-fullwidth mb-4" type="submit">My follows</button></a>
 
-    <div class="block">
-        <h3 class="title is-4">
-            {{ profile.user.username }} follows:
-        </h3>
-        <div class="content">
-            <ul>
-                {% for follows in profile.follows.all %}
-                    <li>
-                        <a href="{{ follows.get_absolute_url }}">
-                            {{ follows }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+{% if user != profile.user %}
+    <h3 class="title is-4">
+        {{ profile.user.username }} follows:
+    </h3>
+    <div class="content">
+        <ul>
+            {% for follows in profile.follows.all|slice:":4" %}
+                <li>
+                    <a href="{{ follows.get_absolute_url }}">
+                        {{ follows }}</a>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 
-    <div class="block">
-        <h3 class="title is-4">
-            {{ profile.user.username }} is followed by:
-        </h3>
-        <div class="content">
-            <ul>
-                {% for follows in profile.followed_by.all %}
-                    <li>
-                        <a href="{{ follows.get_absolute_url }}">
-                            {{ follows }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
 
+    <h3 class="title is-4">
+        {{ profile.user.username }} is followed by:
+    </h3>
+    <div class="content">
+        <ul>
+            {% for follows in profile.followed_by.all|slice:":4" %}
+                <li>
+                    <a href="{{ follows.get_absolute_url }}">
+                        {{ follows }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% else %}
+
+<form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button is-fullwidth has-background-info-light mt-5" type="submit">Tweet</button>
+    </form>
+
+{% endif %}
 </div>
+
 
 {% endblock content %}
