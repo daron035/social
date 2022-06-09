@@ -12,8 +12,8 @@ class Profile(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     follows = models.ManyToManyField(
         'self', related_name='followed_by', symmetrical=False, blank=True)
-    # friends = models.ManyToManyField(
-    #     'self', related_name='friends_by', symmetrical=False, blank=True)
+    friends = models.ManyToManyField(
+        'self', related_name='friends_by', symmetrical=False, blank=True)
     
 
     def __str__(self):
@@ -48,3 +48,8 @@ class Tweets(models.Model):
 
     def time_admin(self):
         return f"{self.created_at:%d-%m-%Y %H:%M}"
+
+
+class FriendRequest(models.Model):
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 from .models import *
 from .forms import *
@@ -38,6 +40,10 @@ def user_follows_list(request):
     # profiles = Profile.objects.all()
     return render(request, 'chitter/user_follows_list.html', {'profiles': profiles})
 
+# REDIRECT TO SAME PAGE
+from django.http import HttpResponseRedirect # REDIRECT TO SAME PAGE
+# REDIRECT TO SAME PAGE
+
 def profile(request, pk):
     profile = Profile.objects.get(pk=pk)
     if request.method == 'POST': # форма твита
@@ -54,8 +60,41 @@ def profile(request, pk):
             current_user.follows.add(profile)
         elif action == 'unfollow':
             current_user.follows.remove(profile)
+        elif action == 'delete':
+            current_user.friends.remove(profile)
         current_user.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER')) # REDIRECT TO SAME PAGE
     form = TweetsForm
     return render(request, 'chitter/profile.html', {'profile': profile, 'form': form})
 
-# def profile_tweet_redirect(request):
+
+def user_friends_list(request):
+    profiles = Profile.objects.get(user=request.user)
+    requests = FriendRequest.objects.filter(receiver=request.user)
+    return render(request, 'chitter/user_friends_list.html', {'profiles': profiles, 'requests': requests})
+
+
+@login_required
+def send_friend_request(request, pk):
+    sender = request.user
+    receiver = User.objects.get(id=pk)
+    obj, created = FriendRequest.objects.get_or_create(sender=sender, receiver=receiver)
+
+    if created:
+        return HttpResponse('friend request send')
+    else:
+        return HttpResponse('friend request already send')
+
+@login_required
+def accept_friend_request(request, pk):
+    user = request.user.profile
+    new_user = User.objects.get(pk=pk)
+    user.friends.add(new_user.profile)
+    FriendRequest.objects.get(sender=new_user).delete()
+    return redirect('user_friends_list')
+
+@login_required
+def decline_friend_request(request, pk):
+    new_user = User.objects.get(pk=pk)
+    FriendRequest.objects.get(sender=new_user).delete()
+    return redirect('user_friends_list')

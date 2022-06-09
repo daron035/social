@@ -9,30 +9,54 @@
     <form method="post">
         {% csrf_token %}
         <div class="buttons has-addons">
-        {% if profile in user.profile.follows.all %}
+            {% if profile in user.profile.follows.all %}
             <button class="button is-success is-static">Follow</button>
             <button class="button is-danger" name="follow" value="unfollow">
                 Unfollow
             </button>
-        {% elif profile == user.profile %}
-        {% else %}
+            {% elif profile == user.profile %}
+            {% else %}
             <button class="button is-success" name="follow" value="follow">
                 Follow
             </button>
             <button class="button is-danger is-static">Unfollow</button>
-        {% endif %}
-        </div>
+            {% endif %}
     </form>
-    <div class="content mt-5">
-        {% for tweet in profile.user.tweets.all %}
-            <div class="box">
-                {{ tweet.body|slice:":20" }}
-                <span class="is-small has-text-grey-light">
-                    ({{ tweet.created_at }})
-                </span>
-            </div>
-        {% endfor %}
+
+    {% if profile == user.profile %}
+    {% elif profile not in user.profile.friends.all %}
+    <div class="block ml-6">
+        <a href="{% url 'send_friend_request' profile.user.pk %}">
+            <button class="button is-primary is-rounded">
+            Send request friend
+        </button>
+        </a>
     </div>
+    {% elif profile in user.profile.friends.all %}
+    {% comment %} <div class="block ml-6"> {% endcomment %}
+        <div class="block ml-6 is-size-5 has-text-justified" style="color: rgba(240, 245, 250)">Your friend?</div>
+        {% comment %}
+    </div> {% endcomment %}
+    <div class="block">
+        <button class="button is-danger ml-5" name="follow" value="delete">
+            Delete
+        </button>
+    </div>
+    {% endif %}
+
+</div>
+    
+    {% for tweet in profile.user.tweets.all %}
+    <div class="content mt-5">
+        <div class="box">
+            {{ tweet.body|slice:":20" }}
+            <span class="is-small has-text-grey-light">
+                ({{ tweet.created_at }})
+            </span>
+        </div>
+    </div>
+    {% endfor %}
+    
 </div>
 
 
@@ -45,18 +69,20 @@
         <button class="button is-fullwidth mb-4" type="submit">My tweets</button></a>
     <a href="{% url 'user_follows_list' %}">
         <button class="button is-fullwidth mb-4" type="submit">My follows</button></a>
+    <a href="{% url 'user_friends_list' %}">
+        <button class="button is-fullwidth mb-4" type="submit">My friends</button></a>
 
-{% if user != profile.user %}
+    {% if user != profile.user %}
     <h3 class="title is-4">
         {{ profile.user.username }} follows:
     </h3>
     <div class="content">
         <ul>
             {% for follows in profile.follows.all|slice:":4" %}
-                <li>
-                    <a href="{{ follows.get_absolute_url }}">
-                        {{ follows }}</a>
-                </li>
+            <li>
+                <a href="{{ follows.get_absolute_url }}">
+                    {{ follows }}</a>
+            </li>
             {% endfor %}
         </ul>
     </div>
@@ -68,22 +94,23 @@
     <div class="content">
         <ul>
             {% for follows in profile.followed_by.all|slice:":4" %}
-                <li>
-                    <a href="{{ follows.get_absolute_url }}">
-                        {{ follows }}</a>
-                </li>
+            <li>
+                <a href="{{ follows.get_absolute_url }}">
+                    {{ follows }}</a>
+            </li>
             {% endfor %}
         </ul>
     </div>
-{% else %}
-
-<form method="post">
+    {% else %}
+<div class="content">
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="button is-fullwidth has-background-info-light mt-5" type="submit">Tweet</button>
     </form>
+</div>
 
-{% endif %}
+    {% endif %}
 </div>
 
 

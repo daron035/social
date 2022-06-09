@@ -6,6 +6,8 @@
         <button class="button is-fullwidth mb-4" type="submit">My tweets</button></a>
     <a href="{% url 'user_follows_list' %}">
         <button class="button is-fullwidth mb-4" type="submit">My follows</button></a>
+    <a href="{% url 'user_friends_list' %}">
+        <button class="button is-fullwidth mb-4" type="submit">My friends</button></a>
         {% if form %}
     <form method="post">
         {% csrf_token %}
