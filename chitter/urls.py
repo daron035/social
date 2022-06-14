@@ -6,6 +6,7 @@ from .views import *
 urlpatterns = [
     path('', dashboard, name='dashboard'),
     path('profile_list/', profile_list, name='profile_list'),
+    path('public_profile_list/', public_profile_list, name='public_profile_list'), # for user unregistere
     path('profile/<int:pk>/', profile, name='profile'),
     path('user_follows_list/', user_follows_list, name='user_follows_list'),
 

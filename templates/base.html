@@ -31,7 +31,8 @@
                   <a class="navbar-item" href="{% url 'dashboard' %}">
                     Home
                   </a>
-                  <a class="navbar-item">
+                  {% if user.is_authenticated %}
+                  <a class="navbar-item" href="{% url 'index' %}">
                     Chat
                   </a>
                   <p class="subtitle is-size-6 my-auto ml-3">
@@ -46,6 +47,7 @@
                     </figure>
                 </div>
                   <!-- </span> -->
+                  {% endif %}
                 </div>
               </div>
             </div>

@@ -3,9 +3,8 @@
 {% block content %}
 
 <div class="column">
-<h1 class="is-size-3"> All tweets:</h1>
+
 {% for p in profiles %}
-  {% for t in p.user.tweets.all %}
 
 <div class="block">
     <div class="card">
@@ -20,10 +19,10 @@
             </div>
             <div class="media-content">
               <p class="title is-4">
-                {{ t.user.username }}
+                {{ p.user.username }}
               </p>
               <p class="subtitle is-6">
-                @{{ t.body|lower }}
+                @{{ p.user.username|lower }}
               </p>
             </div>
           </div>
@@ -31,11 +30,11 @@
       </a>
     </div>
   </div>
-  {% endfor %}
+
 {% endfor %}
 
 </div>
 
-{% include 'snipets/sidebar.html' %}
+{% comment %} {% include 'snipets/sidebar.html' %} {% endcomment %}
 
 {% endblock content %}

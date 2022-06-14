@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('user/', include('user.urls')),
     path('', include('chitter.urls')),
+    path('chat/', include('chat.urls')),
 ]
 
 if settings.DEBUG:
