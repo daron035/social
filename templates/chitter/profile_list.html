@@ -10,15 +10,14 @@
 <div class="block">
     <div class="card">
       <a href="{{ p.get_absolute_url }}">
-        <div class="card-content">
           <div class="media">
             <div class="media-left">
-              <figure class="image is-48x48">
-                <img src="https://bulma.io/images/placeholders/96x96.png"
+              <figure class="image is-96x96">
+                <img src="{{ p.user.image.url }}"
                      alt="Placeholder image">
               </figure>
             </div>
-            <div class="media-content">
+            <div class="media-content my-auto">
               <p class="title is-4">
                 {{ t.user.username }}
               </p>
@@ -27,7 +26,6 @@
               </p>
             </div>
           </div>
-        </div>
       </a>
     </div>
   </div>

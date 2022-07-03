@@ -1,11 +1,9 @@
 <div class="column is-one-third">
-{% if user.is_authenticated %}
+
 <a href="{% url 'profile_list' %}">
     <button class="button is-fullwidth mb-4" type="submit">All tweets</button></a>
-{% else %}
-<a href="{% url 'public_profile_list' %}">
-    <button class="button is-fullwidth mb-4" type="submit">All tweets</button></a>
-{% endif %}
+<a href="{% url 'all_users_list' %}">
+    <button class="button is-fullwidth mb-4" type="submit">All users</button></a>
 
 {% if user.is_authenticated %}
     <a href="{% url 'profile' user.profile.pk %}">

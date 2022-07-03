@@ -1,9 +1,15 @@
-from django.shortcuts import render
+from email import message
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.urls import reverse
+from django.urls.base import reverse_lazy
+import json
 
 from chitter.models import Profile
-from .models import Message
+from .models import Message, PrivateChatRoom
+from .utils import *
 
-from user. models import User
+from user.models import User
 
 
 def index(request):
@@ -11,22 +17,32 @@ def index(request):
     return render(request, 'chat/index.html', {'profile': profile})
 
 
-def room(request, room_name):
+def room(request, room_id):
     username = request.user.username
-    messages = Message.objects.filter(room=room_name)[0:25]
+    messages = Message.objects.filter(room=room_id)[0:25]
+    room_id = PrivateChatRoom.objects.get(id=room_id)
 
-    a = room_name
-    messages2 = User.objects.get(username=a)
-    messages2 = Message.objects.filter(room=messages2)[0:25]
+    return render(request, 'chat/room.html', {'room_id': room_id, 'username': username, 'messages': messages})
 
-    # username = request.user.username
-    # a = room_name
-    # messages2 = User.objects.get(username=a)
 
-    # messages = Message.objects.filter(room=room_name)[0:25] | Message.objects.filter(room=messages2)[0:25]
-    # # messages2 = Message.objects.filter(room=messages2)[0:25]
+def create_or_return_private_chat(request, pk):
+    user1 = request.user
+    payload = {}
+    if user1.is_authenticated:
+        if request.method == "GET":
+            user2_id = request.GET.get(pk)
+            print(user2_id)
+            try:
+                user2 = User.objects.get(pk=pk)
+                chat = find_or_create_private_chat(user1, user2)
+                print("Successfully got the chat.")
+                payload['response'] = "Successfully got the chat."
+                payload['chatroom_id'] = chat.pk
+                return redirect('room', chat.pk)
+            except Exception as e:
+                payload['response'] = "Unable to start a chat with that user."
+                print(e)
+    else:
+        payload['response'] = "You can't start a chat if you are not authenticated."
 
-    # print('AAAAAAAAAAAA', messages2)
-    # print(type(messages2))
-    
-    return render(request, 'chat/room.html', {'room_name': room_name, 'username': username, 'messages': messages})
+    return HttpResponse(json.dumps(payload), content_type="application/json")

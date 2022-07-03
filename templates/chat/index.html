@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
     <title>Dwitter</title>
 </head>
 <body>
@@ -58,18 +58,17 @@
             <div class="column is-one-quarter">
 
                 {% for f in user.profile.friends.all %}
-                <div class="block">
+                <div class="block" name="user2_id" value="{{ f.profile.user.pk }}">
                     <div class="card">
-                      {% comment %} <a href="{% url 'room' f.user.username %}"> {% endcomment %}
-                      <a href="{% url 'room' f.user.username %}">
-                        <div class="card-content">
+                        <a href="{% url 'create_room' f.pk %}">
                           <div class="media">
                             <div class="media-left">
-                              <figure class="image is-48x48">
+                              <figure class="image is-96x96">
                                 <img src="{{ f.user.image.url }}"
-                                     alt="Placeholder image">
+                                alt="Placeholder image">
                               </figure>
                             </div>
+                            <div class="card-content">
                             <div class="media-content">
                               <p class="title is-4">
                                 {{ f.user.username }}
@@ -84,21 +83,10 @@
                     </div>
                 </div>
                 {% endfor %}
-
-
             </div>
-
-            <article class="message">
-  <div class="message-header">
-    <p class="has-text-right">Hello World</p>
-  </div>
-  <div class="message-body">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
-  </div>
-</article>
-
         </div>
     </div>
     
+
 </body>
 </html>

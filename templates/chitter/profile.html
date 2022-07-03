@@ -4,11 +4,11 @@
 
 <div class="column">
     <div class="block">
-        <h1 class="title">{{ profile.user.username|upper }}'s chits</h1>
+        <h1 class="title">{{ profile.user.username|upper }}'s tweets</h1>
     </div>
+    <div class="buttons has-addons">
     <form method="post">
         {% csrf_token %}
-        <div class="buttons has-addons">
             {% if profile in user.profile.follows.all %}
             <button class="button is-success is-static">Follow</button>
             <button class="button is-danger" name="follow" value="unfollow">
@@ -26,17 +26,13 @@
     {% if profile == user.profile %}
     {% elif profile not in user.profile.friends.all %}
     <div class="block ml-6">
-        <a href="{% url 'send_friend_request' profile.user.pk %}">
+        <a href="{% url 'send_friend_request' profile.pk %}">
             <button class="button is-primary is-rounded">
-            Send request friend
-        </button>
+            Send request friend</button>
         </a>
     </div>
     {% elif profile in user.profile.friends.all %}
-    {% comment %} <div class="block ml-6"> {% endcomment %}
         <div class="block ml-6 is-size-5 has-text-justified" style="color: rgba(240, 245, 250)">Your friend?</div>
-        {% comment %}
-    </div> {% endcomment %}
     <div class="block">
         <button class="button is-danger ml-5" name="follow" value="delete">
             Delete

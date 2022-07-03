@@ -3,11 +3,8 @@
 {% block content %}
 
 <div class="column">
-    {% comment %} <h1> Tweets your follows </h1> {% endcomment %}
     <h1 class="is-size-3"> Tweets your follows and friends: </h1>
-        {% comment %} {% for f in qs2 %} {% endcomment %}
-        {% for fr in qs2 %}
-            {% comment %} {% for tweet in f%} {% endcomment %}
+        {% for fr in profiles %}
             {% for tweet in fr.user.tweets.all %}
             <div class="box">
                 {{ tweet.body }}

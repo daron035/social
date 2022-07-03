@@ -13,12 +13,12 @@ class LoginUser(LoginView):
     form_class = AuthenticationForm
 
     def get_success_url(self):
-        return reverse_lazy('home')
+        return reverse_lazy('dashboard')
 
 
 def logout_user(request):
     logout(request) 
-    return redirect('home')   
+    return redirect('dashboard')   
 
 
 class RegisterUser(CreateView):

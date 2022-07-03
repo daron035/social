@@ -1,0 +1,64 @@
+version: '3.1'
+
+services:
+  web:
+    container_name: django_social_container
+    build:
+      context: ./
+      dockerfile: dockerfile
+    # command: gunicorn social.wsgi:application --bind 0.0.0.0:8000
+    # command: daphne -b 0.0.0.0 -p 8000 social.asgi:application
+    command: gunicorn social.asgi:application --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker
+    expose:
+      - "80"
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+  db:
+    container_name: postgres_container
+    image: postgres:12.0-alpine
+    ports:
+      - 5432:5432
+    expose:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.db
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: django_pass
+    ports:
+      - "5050:80"
+  nginx:
+    container_name: nginx_container
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    depends_on:
+      - web
+  redis: # default port 6379
+    container_name: redis_container
+    image: redis
+    ports:
+      - 6379:6379
+    restart: always
+    depends_on:
+      - web
+
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

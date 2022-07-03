@@ -32,11 +32,9 @@
           </div>
         </div>
     </div>
-  <!-- </div> -->
 {% endfor %}
 
 {% for p in profiles.friends.all %}
-  <!-- <div class="block my-1"> -->
     <div class="card my-2">
       <a href="{{ p.get_absolute_url }}">
         <div class="media-content">
@@ -53,14 +51,13 @@
             </a>
             </div>
             <div class="media-right my-auto">
-                <a href="#">
+                <a href="{% url 'create_room' p.pk %}">
                     <button class="button mr-5">Chat</button>
-                {% comment %} </a> {% endcomment %}
+                </a>
             </div>
           </div>
         </div>
     </div>
-  <!-- </div> -->
 {% endfor %}
 </div>
 

@@ -16,16 +16,11 @@
         <div class="hero-body my-1">
           <nav class="navbar">
             <div class="container">
-              <div class="navbar-brand">
-                <a class="navbar-item">
-                  <h1 class="is-size-1">Home</h1>
-                </a>
-                <span class="navbar-burger" data-target="navbarMenuHeroA">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-              </div>
+              <a href='https://github.com/daron035/social' target="_blank">
+              <figure class="image is-96x96">
+                <img class="is-rounded" src="{% static 'git_logo.png' %}">
+              </figure></a>
+
               <div id="navbarMenuHeroA" class="navbar-menu">
                 <div class="navbar-end">
                   <a class="navbar-item" href="{% url 'dashboard' %}">
@@ -38,6 +33,8 @@
                   <p class="subtitle is-size-6 my-auto ml-3">
                     {{ user.username }}
                   </p>
+                  <a class="navbar-item ml-5 has-text-grey-lighter" href="{% url 'logout' %}">
+                    logout</a>
                   <!-- <span class="navbar-item"> -->
                       <div class="block" >
                       <figure class="image is-96x96">
@@ -47,6 +44,9 @@
                     </figure>
                 </div>
                   <!-- </span> -->
+                  {% else %}
+                  <a class="navbar-item" href="{% url 'login' %}">
+                    login</a>
                   {% endif %}
                 </div>
               </div>
