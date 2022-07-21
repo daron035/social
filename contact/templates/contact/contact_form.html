@@ -1,0 +1,12 @@
+<div>
+    {% comment %} <h3>Newsletter</h3> {% endcomment %}
+
+    <p>By subscribing to our mailing list you will always get latest news and updates from us.</p>
+    <form action="{% url 'contact' %}" method="post">
+        {% csrf_token %}
+        {{ contact_form }}
+        {% comment %} <button><span aria-hidden="true" >asdfsd</span></button> {% endcomment %}
+        <button class="button is-primary is-rounded">
+            Send request friend</button>
+    </form>
+</div>

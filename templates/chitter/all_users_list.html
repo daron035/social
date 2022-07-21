@@ -2,79 +2,88 @@
 
 {% block content %}
 
-<div class="column">
-  My friends:
-{% for r in requests %}
-    <div class="card my-2">
-      <a href="{{ r.sender.profile.get_absolute_url }}">
-        <div class="media-content">
-          <div class="media">
-            <div class="media-left my-auto">
-              <figure class="image is-96x96">
-                <img class="is-rounded" src="{{ r.sender.image.url }}" alt="Placeholder image">
-              </figure>
-            </div>
-        </a>
-            <div class="media-content has-text-weight-light subtitle is-4 is-active my-auto">
-                <a href="{{ p.get_absolute_url }}">
-                {{r.sender}}</a>
-            </div>
-            <div class="media-right my-auto">
-                <a href="{% url 'add_friend' r.sender.pk %}">
-                    <button class="button is-success mr-1">Accept</button>
-                </a>
-            </div>
-            <div class="media-right my-auto">
-                <a href="{% url 'decline_friend_request' r.sender.pk %}">
-                    <button class="button is-danger mr-5">Decline</button>
-                </a>
-            </div>
-          </div>
-        </div>
-    </div>
-{% endfor %}
+<div class="row mt-2">
+  <div class="col">
 
-{% for p in profiles %}
-    <div class="card my-2">
-      <a href="{{ p.get_absolute_url }}">
-        <div class="media-content">
-          <div class="media">
-            <div class="media-left my-auto">
-              <figure class="image is-96x96">
-                <img class="is-rounded" src="{{ p.user.image.url }}" alt="Placeholder image">
-              </figure>
-            </div>
+
+    <div class="column">
+      <h1 class="is-size-3 mb-5">My friends:</h1>
+      {% for r in requests %}
+      <div class="card my-2">
+        <a href="{{ r.sender.profile.get_absolute_url }}">
+          <div class="media-content">
+            <div class="media">
+              <div class="media-left my-auto">
+                <figure class="image is-96x96">
+                  <img class="is-rounded" src="{{ r.sender.image.url }}" alt="Placeholder image">
+                </figure>
+              </div>
         </a>
         <div class="media-content has-text-weight-light subtitle is-4 is-active my-auto">
-                <a href="{{ p.get_absolute_url }}">
-              {{p.user.username}}
-            </a>
-            </div>
-            {% comment %} {% if p in p.friends %} {% endcomment %}
-            {% if p == user.profile %}
-            <div class="media-right my-auto mr-5">
-                <button class="button is-static has-background-white is-rounded">
-                  That's You</button>
-            </div>
-            {% elif p in user.profile.friends.all %}
-            <div class="media-right my-auto mr-5">
-                <button class="button is-static has-background-white is-rounded">
-                  You'r friend</button>
-            </div>
-            {% elif p not in p.friends.all %}
-            <div class="media-right my-auto mr-5">
-              <a href="{% url 'send_friend_request' p.pk %}">
-                <button class="button is-primary is-rounded">
-                  Send request friend</button>
-                </a>
-              </div>
-            {% endif %}
-          </div>
+          <a href="{{ p.get_absolute_url }}">
+            {{r.sender}}</a>
         </div>
+        <div class="media-right my-auto">
+          <a href="{% url 'add_friend' r.sender.pk %}">
+            <button class="button is-success mr-1">Accept</button>
+          </a>
+        </div>
+        <div class="media-right my-auto">
+          <a href="{% url 'decline_friend_request' r.sender.pk %}">
+            <button class="button is-danger mr-5">Decline</button>
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
+  {% endfor %}
+
+  {% for p in profiles %}
+  <div class="card my-2">
+    <a href="{{ p.get_absolute_url }}">
+      <div class="media-content">
+        <div class="media">
+          <div class="media-left my-auto">
+            <figure class="image is-96x96">
+              <img class="is-rounded" src="{{ p.user.image.url }}" alt="Placeholder image">
+            </figure>
+          </div>
+    </a>
+    <div class="media-content has-text-weight-light subtitle is-4 is-active my-auto">
+      <a href="{{ p.get_absolute_url }}">
+        {{p.user.username}}
+      </a>
+    </div>
+    {% comment %} {% if p in p.friends %} {% endcomment %}
+    {% if p == user.profile %}
+    <div class="media-right my-auto mr-5">
+      <button class="button is-static has-background-warning has-text-black is-rounded">
+        That's You</button>
+    </div>
+    {% elif p in user.profile.friends.all %}
+    <div class="media-right my-auto mr-5">
+      <button class="button is-static has-background-info has-text-white is-rounded">
+        You'r friend</button>
+    </div>
+    {% elif p not in p.friends.all %}
+    <div class="media-right my-auto mr-5">
+      <a href="{% url 'send_friend_request' p.pk %}">
+        <button class="button is-primary has-text-black is-rounded">
+          Send request friend</button>
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+</div>
 {% endfor %}
 </div>
 
-{% include 'snipets/sidebar.html' %}
+</div>
+</div>
+
+{% comment %} <div class="col-4">
+  {% include 'snipets/sidebar.html' %}
+</div> {% endcomment %}
 
 {% endblock content %}

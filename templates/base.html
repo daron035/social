@@ -3,67 +3,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
-    <title>Dwitter</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
+  <title>Dwitter</title>
 </head>
 
 <body>
-    <section class="hero is-small has-background-info-light">
-        <!-- Hero head: will stick at the top -->
-        <div class="hero-body my-1">
-          <nav class="navbar">
-            <div class="container">
-              <a href='https://github.com/daron035/social' target="_blank">
-              <figure class="image is-96x96">
-                <img class="is-rounded" src="{% static 'git_logo.png' %}">
-              </figure></a>
 
-              <div id="navbarMenuHeroA" class="navbar-menu">
-                <div class="navbar-end">
-                  <a class="navbar-item" href="{% url 'dashboard' %}">
-                    Home
-                  </a>
-                  {% if user.is_authenticated %}
-                  <a class="navbar-item" href="{% url 'index' %}">
-                    Chat
-                  </a>
-                  <p class="subtitle is-size-6 my-auto ml-3">
-                    {{ user.username }}
-                  </p>
-                  <a class="navbar-item ml-5 has-text-grey-lighter" href="{% url 'logout' %}">
-                    logout</a>
-                  <!-- <span class="navbar-item"> -->
-                      <div class="block" >
-                      <figure class="image is-96x96">
-                    <a class="#">
-                            <img class="is-rounded" style="margin-top: 10px; margin-left: 10px;" src="{{ user.image.url }}">
-                        </a>
-                    </figure>
-                </div>
-                  <!-- </span> -->
-                  {% else %}
-                  <a class="navbar-item" href="{% url 'login' %}">
-                    login</a>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-    </section>
-      
+  {% include 'snipets/header.html' %}
 
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col">
+        {% block content %}
 
-    <div class="container mt-4">
-        <div class="columns">
-            {% block content %}
-
-            {% endblock content %}
-        </div>
+        {% endblock content %}
+      </div>
+      <div class="col-4">
+        {% include 'snipets/sidebar.html' %}
+      </div>
     </div>
+  </div>
+
+    {% include 'snipets/footer.html' %}
+
+    {% comment %}
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script> {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
 </body>
+
 
 </html>

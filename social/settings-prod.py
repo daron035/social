@@ -49,6 +49,11 @@ INSTALLED_APPS = [
     'chat',
     'user.apps.UserConfig',
     'chitter.apps.ChitterConfig',
+    'contact.apps.ContactConfig',
+    # 'rest.apps.RestConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +94,7 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             "hosts": [('redis', 6379)],
         },
+        # "ROUTING": "social.routing.channel_routing", # channels_redis
     },
 }
 
@@ -158,6 +164,24 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+# smtp
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'kamil249@yandex.ru'
+EMAIL_HOST_PASSWORD = 'goggarxqctejwopi'
+EMAIL_PORT = 465
+
 
 REDIS_HOST = 'redis'
 REDIS_PORT = '6379'

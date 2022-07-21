@@ -10,8 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from logging import handlers
+from pythonjsonlogger import jsonlogger
 import os
 from pathlib import Path
+from .logging_formatter import CustomJsonFormatter
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +48,11 @@ INSTALLED_APPS = [
     'chat',
     'user.apps.UserConfig',
     'chitter.apps.ChitterConfig',
+    'contact.apps.ContactConfig',
+    # 'rest.apps.RestConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +64,41 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'main_formatter': {
+            'format': '{asctime} - {levelname} - {module} - {filename} - {message}',
+            'style': '{',
+        }, # time - LEVEL - module - message
+        'json_formatter': {
+            '()': CustomJsonFormatter, 
+        },
+    },
+    
+    'handlers': {
+        'console': {   
+            'class': 'logging.StreamHandler',
+            'formatter': 'main_formatter',
+        },
+        'file': {   
+            'class': 'logging.FileHandler',
+            'formatter': 'json_formatter',
+            'filename': 'json.log'
+        },
+    },
+
+    'loggers': {
+        'main': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
 
 ROOT_URLCONF = 'social.urls'
 
@@ -79,21 +122,21 @@ WSGI_APPLICATION = 'social.wsgi.application'
 
 ASGI_APPLICATION = 'social.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        # 'BACKEND': 'asgi_redis.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
-}
-
 # CHANNEL_LAYERS = {
 #     'default': {
-#         'BACKEND': 'channels.layers.InMemoryChannelLayer'
-#     }
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         # 'BACKEND': 'asgi_redis.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#         },
+#     },
 # }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database
@@ -131,7 +174,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -142,8 +185,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/")]
+STATICFILES_DIRS = [
+    BASE_DIR.joinpath("static")
+]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -152,3 +198,31 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+
+# smtp
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'kamil249@yandex.ru'
+EMAIL_HOST_PASSWORD = 'goggarxqctejwopi'
+EMAIL_PORT = 465
+
+# REDIS_HOST = '127.0.0.1'
+REDIS_HOST = '0.0.0.0'
+REDIS_PORT = '6379'
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 18000} # 5 hours
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

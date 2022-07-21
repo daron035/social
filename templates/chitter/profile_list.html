@@ -2,38 +2,48 @@
 
 {% block content %}
 
-<div class="column">
-<h1 class="is-size-3"> All tweets:</h1>
-{% for p in profiles %}
-  {% for t in p.user.tweets.all %}
+<div class="row">
+  <div class="col">
 
-<div class="block">
-    <div class="card">
-      <a href="{{ p.get_absolute_url }}">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-96x96">
-                <img src="{{ p.user.image.url }}"
-                     alt="Placeholder image">
-              </figure>
+
+    <div class="column">
+      <h1 class="is-size-3 mb-5"> All tweets:</h1>
+      {% for p in profiles %}
+      {% for t in p.user.tweets.all %}
+
+      <div class="block">
+        <div class="card">
+          <a href="{{ p.get_absolute_url }}">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-96x96">
+                  <img src="{{ p.user.image.url }}" alt="Placeholder image">
+                </figure>
+              </div>
+              <div class="media-content my-auto">
+                <p class="title is-4">
+                  {{ t.user.username }}
+                </p>
+                <p class="subtitle is-6">
+                  @{{ t.body|lower }}
+                </p>
+              </div>
             </div>
-            <div class="media-content my-auto">
-              <p class="title is-4">
-                {{ t.user.username }}
-              </p>
-              <p class="subtitle is-6">
-                @{{ t.body|lower }}
-              </p>
-            </div>
-          </div>
-      </a>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+      {% endfor %}
+
     </div>
   </div>
-  {% endfor %}
-{% endfor %}
 
-</div>
 
-{% include 'snipets/sidebar.html' %}
+  {% comment %} <div class="col-4">
+    {% include 'snipets/sidebar.html' %}
+  </div> {% endcomment %}
 
-{% endblock content %}
+  </div>
+
+
+  {% endblock content %}

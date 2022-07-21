@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
+  <title>Dwitter</title>
+</head>
+
+<body>
+  <section class="hero is-small is-warning mb-4">
+    <div class="hero-body ml-6">
+      <div class="columns mt-3">
+      <!-- <div class="block -->
+      <div class="block title mr-6" style="color: orange;">
+        <a href="#" target="_blank">Resume.pdf</a></div>
+      <div class="block title ml-6" style="color: red;">
+        <a href="#">Pet Project</a>
+      </div>
+    </div>
+      <!-- </div> -->
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="columns mt-4 ml-5">
+      <div class="column is-one-third">
+        <div class="block">
+          <div class="is-size-3">Кусяков Камил Фаилевич</div>
+          <div class="ml-5 mt-2">
+            <div>25 лет (22.09.1996)</div>
+            <div>phone: +79279454642</div>
+            <div>telegram: <a href="https://t.me/milka_eleven" target="_blank">@milka_eleven</a></div>
+            <div>email: kam24940@gmail.com</div>
+          </div>
+        </div>
+        <div class="block">
+          <span class="is-size-4">Образование: </span>УГНТУ
+        </div>
+        <div class="block">
+          <span class="is-size-4">Environment: </span>Python, Django, REST, WS API, PostgreSQL, Docker, Nginx, CSS, HTML, AJAX, Linux
+        </div>
+        {% comment %} <div class="block">
+          <div class="card mt-3">
+            <a href="#">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-96x96">
+                    <img src="#" alt="Placeholder image">
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="media-content">
+                    <p class="title is-4">
+                      #
+                    </p>
+                    <p class="subtitle is-6">
+                      #
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div> {% endcomment %}
+      </div>
+
+      <div class="column is-offset-1">
+        <div class="block">
+          <span class="is-size-4">Опыт: </span> Разработал Single page application с текстовым полем ввода, обработкой запроса и выводом информации для менеджмента внутри компании.
+        </div>
+        <div class="block">
+          <span class="is-size-4">О пет проекте: </span> Custom user model (AbstractUser), система аутенфикации без модуля allauth.
+          User может постить сообщения, подписываться и добавлять в друзья другим пользователям, обмениваться с ними сообщениями в приватном chat room.
+          Реализован небольшой REST API. Сервер Uvicorn. VPS Beget.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+</html>

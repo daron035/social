@@ -1,0 +1,12 @@
+<footer class="footer mt-6">
+    <div class="content pb-1">
+    <h3>Newsletter</h3>
+
+    {% comment %} <p>By subscribing to our mailing list you will always get latest news and updates from us.</p> {% endcomment %}
+    <form action="{% url 'contact' %}" method="post">
+        {% csrf_token %}
+        {{ contact_form }}
+        <button>Send</button>
+    </form>
+</div>
+</footer>

@@ -1,0 +1,33 @@
+{"message": "home 127.0.0.1", "timestamp": "2022-07-19T17:37:57.206245Z", "level": "INFO"}
+{"message": "127.0.0.1", "timestamp": "2022-07-19T17:37:57.222257Z", "level": "INFO"}
+{"message": "127.0.0.1", "timestamp": "2022-07-19T17:38:21.981594Z", "level": "INFO"}
+{"message": "home 127.0.0.1", "timestamp": "2022-07-19T17:38:31.362607Z", "level": "INFO"}
+{"message": "Connecting", "ip": "127.0.0.1", "timestamp": "2022-07-19T17:38:31.363180Z", "level": "INFO"}
+{"message": "home 127.0.0.1", "timestamp": "2022-07-19T17:41:44.233764Z", "level": "INFO"}
+{"message": "Connecting", "ip": "127.0.0.1", "timestamp": "2022-07-19T17:41:44.234398Z", "level": "INFO"}
+{"message": "home 127.0.0.1", "timestamp": "2022-07-19T17:42:31.518816Z", "level": "INFO"}
+{"message": "home 127.0.0.1", "timestamp": "2022-07-19T17:43:06.851476Z", "level": "INFO"}
+{"message": "home 127.0.0.1", "timestamp": "2022-07-19T17:43:17.702083Z", "level": "INFO"}
+{"message": "home 127.0.0.1", "timestamp": "2022-07-19T17:43:30.207250Z", "level": "INFO"}
+{"message": "Connecting", "ip": "127.0.0.1", "timestamp": "2022-07-19T17:43:58.524915Z", "level": "INFO"}
+{"message": "Connecting 127.0.0.1", "ip": "127.0.0.1", "timestamp": "2022-07-19T17:44:45.671666Z", "level": "INFO"}
+{"message": "Connecting", "ip": "127.0.0.1", "timestamp": "2022-07-19T17:45:26.104540Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-19T17:50:08.722298Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-19T17:50:23.919245Z", "level": "INFO"}
+{"message": "not_authenticated", "ip": "127.0.0.1", "timestamp": "2022-07-19T17:50:23.930620Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:05:46.086557Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:06:13.072742Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:08:09.739659Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:21:24.772474Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:21:29.565975Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:23:05.909864Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:23:15.301890Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:24:22.770838Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:24:44.578805Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:25:32.478631Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T14:31:09.236513Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T16:06:56.375555Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T16:19:52.135362Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T16:19:56.391408Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T17:27:16.930800Z", "level": "INFO"}
+{"message": "home", "ip": "127.0.0.1", "timestamp": "2022-07-20T21:08:41.709441Z", "level": "INFO"}

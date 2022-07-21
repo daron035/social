@@ -4,13 +4,22 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.views.generic import ListView
+import logging
 
 from .models import *
 from user.models import User
 from .forms import *
 
 
-def dashboard(request):
+logger = logging.getLogger('main')
+
+def home(request):
+    
+    a = request.META.get('REMOTE_ADDR')
+    # logger.info(f"home {a}")
+    # logger.info("hello")
+    logger.info(f"home", extra={"ip": a})
+
     if not request.user.is_authenticated:
         return redirect('public_profile_list')
 
@@ -21,15 +30,23 @@ def dashboard(request):
             tweet = form.save(commit=False)
             tweet.user = request.user
             tweet.save()
-            return redirect('dashboard')
+            return redirect('home')
 
     q = Profile.objects.get(user=request.user)
     profiles = (q.friends.all()).union(q.follows.all())
 
-    return render(request, 'chitter/dashboard.html', {'form': form, 'profiles': profiles})
+    return render(request, 'chitter/home.html', {'form': form, 'profiles': profiles})
 
 
 def public_profile_list(request):
+    a = request.META.get('REMOTE_ADDR')
+
+    if request.user.is_authenticated:
+        logger.info(f"public_authenticated", extra={"ip": a})
+    elif not request.user.is_authenticated:
+        logger.info(f"not_authenticated", extra={"ip": a})
+    else:
+        logger.info(f"EXCEPTION", extra={"ip": a})
     profiles = Profile.objects.all()
 
     return render(request, 'chitter/public_profile_list.html', {'profiles': profiles})
@@ -133,3 +150,7 @@ def decline_friend_request(request, pk):
     new_user = User.objects.get(pk=pk)
     FriendRequest.objects.get(sender=new_user).delete()
     return redirect('user_friends_list')
+
+
+def resume(request):
+    return render(request, 'resume')

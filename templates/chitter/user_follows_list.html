@@ -2,6 +2,9 @@
 
 {% block content %}
 
+<div class="row">
+<div class="col">
+
 <div class="column">
   My follows:
 {% for p in profiles.follows.all %}
@@ -23,6 +26,9 @@
   </a>
 {% endfor %}
 </div>
+
+</div>
+<div class="col">
 
 <div class="column">
   My followers:
@@ -46,6 +52,8 @@
 {% endfor %}
 </div>
 
-{% include 'snipets/sidebar.html' %}
+</div>
+</div>
+{% comment %} {% include 'snipets/sidebar.html' %} {% endcomment %}
 
 {% endblock content %}

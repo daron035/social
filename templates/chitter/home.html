@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mt-2">
+  <div class="col">
+
+    <div class="column">
+
+
+<h1 class="is-size-3 mb-5"> Tweets your follows and friends: </h1>
+
+{% for fr in profiles %}
+{% for tweet in fr.user.tweets.all %}
+<div class="box">
+  {{ tweet.body }}
+  <span class="is-small has-text-grey-light">
+    {{ tweet.created_at }} by {{ tweet.user.username }}
+  </span>
+</div>
+{% endfor %}
+{% endfor %}
+
+{% for t in tweets %}
+<div class="box">
+  {{ t.body }}
+  <span class="is-small has-text-grey-light">
+    {{ t.created_at }} by {{ t.user.username }}
+  </span>
+</div>
+{% endfor %}
+
+
+
+<!-- <div class="column">
+    <h1 class="is-size-3"> Tweets your follows and friends: </h1>
+        {% for fr in profiles %}
+            {% for tweet in fr.user.tweets.all %}
+            <div class="box">
+                {{ tweet.body }}
+                <span class="is-small has-text-grey-light">
+                    {{ tweet.created_at }} by {{ tweet.user.username }}
+                </span>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for t in tweets %}
+        <div class="box">
+            {{ t.body }}
+            <span class="is-small has-text-grey-light">
+                {{ t.created_at }} by {{ t.user.username }}
+            </span>
+        </div>
+    {% endfor %}
+</div> -->
+
+
+<!-- <div class="row"> -->
+<!-- <div class="col-4">
+            {% include 'snipets/sidebar.html' %}
+          This container is <strong>centered</strong> on desktop.
+        </div> -->
+<!-- </div> -->
+<!-- </div> -->
+
+</div>
+</div>
+</div>
+
+{% endblock content %}

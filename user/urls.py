@@ -5,9 +5,9 @@ from .views import *
 
 
 urlpatterns = [
-    path('login/', LoginUser.as_view(), name='login'),
-    path('logout/', logout_user, name='logout'),
-    path('register/', RegisterUser.as_view(), name='register'),
+    path('login/', LoginUser.as_view(), name='login_user'),
+    path('logout/', logout_user, name='logout_user'),
+    path('register/', RegisterUser.as_view(), name='register_user'),
 
     path(
         "password_change/", PasswordChangeUser.as_view(), name="password_change"
