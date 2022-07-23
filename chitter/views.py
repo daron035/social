@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.views.generic import ListView
 import logging
+from django.forms import model_to_dict
+from django.http import JsonResponse
 
 from .models import *
 from user.models import User
@@ -34,8 +36,9 @@ def home(request):
 
     q = Profile.objects.get(user=request.user)
     profiles = (q.friends.all()).union(q.follows.all())
+    users = User.objects.all()
 
-    return render(request, 'chitter/home.html', {'form': form, 'profiles': profiles})
+    return render(request, 'chitter/home.html', {'form': form, 'profiles': profiles, 'users': users})
 
 
 def public_profile_list(request):
@@ -80,12 +83,14 @@ def user_follows_list(request):
 def profile(request, pk):
     profile = Profile.objects.get(pk=pk)
     if request.method == 'POST':  # form tweet
-        form = TweetsForm(request.POST)
-        if form.is_valid():
-            tweet = form.save(commit=False)
-            tweet.user = request.user
-            tweet.save()
-            return redirect(profile.get_absolute_url())
+        # form = TweetsForm(request.POST)
+        # if form.is_valid():
+        #     instance = form.save(commit=False)
+        #     instance.user = request.user
+        #     instance.save()
+        #     # return redirect(profile.get_absolute_url())
+        #     return JsonResponse(
+        #         model_to_dict(instance, fields=['title']), status=201)
         current_user = request.user.profile  # form follow to user
         data = request.POST
         action = data.get('follow')
@@ -103,6 +108,18 @@ def profile(request, pk):
     return render(request, 'chitter/profile.html', {'profile': profile, 'form': form})
 
 
+def post_create(request):
+    if request.method == 'POST':  # form tweet
+        form = TweetsForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            # return redirect(profile.get_absolute_url())
+            return JsonResponse(
+                model_to_dict(instance, fields=['body']), status=201)
+
+
 class UserList(ListView):
     model = Profile
     template_name = 'chitter/all_users_list.html'
@@ -110,6 +127,13 @@ class UserList(ListView):
 
     def get_queryset(self):
         return Profile.objects.all().order_by('user__username')
+
+class UserSearchList(UserList):
+    def get_queryset(self):
+        q = self.request.GET.get('search')
+        res = User.objects.filter(username__icontains=q)
+        users = [i.profile for i in res]
+        return users
 
 def user_friends_list(request):
     profiles = Profile.objects.get(user=request.user)
@@ -154,3 +178,14 @@ def decline_friend_request(request, pk):
 
 def resume(request):
     return render(request, 'resume')
+
+
+def get_search(request):
+    q = request.GET.get('search')
+    print('\n\n', q, '\n\n')
+    # res = User.objects.filter(username__search=q)
+    res = User.objects.filter(username__icontains=q)
+    users = [i.profile for i in res]
+    print('\n\n', res, '\n\n')
+    print('\n\n', users, '\n\n')
+    return redirect('all_users_list')

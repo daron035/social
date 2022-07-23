@@ -16,4 +16,7 @@ urlpatterns = [
     path('add_friend/<int:pk>/', accept_friend_request, name='add_friend'),
     path('decline_friend_request/<int:pk>/', decline_friend_request, name='decline_friend_request'),
     path('send_friend_request/<int:pk>/', send_friend_request, name='send_friend_request'),
+
+    path('search_res', UserSearchList.as_view(), name='search'),
+    path('create/', post_create, name="create"),
 ]

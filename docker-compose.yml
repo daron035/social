@@ -61,14 +61,14 @@ services:
     build: 
       context: ./
     command: celery -A social worker -l INFO
-    # depends_on:
-    #   - redis
+    depends_on:
+      - web
   celery-beat: # default port 5555
     build: 
       context: ./
     command: celery -A social beat -l INFO
-    # depends_on:
-    #   - redis
+    depends_on:
+      - celery
 
 
 volumes:
